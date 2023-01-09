@@ -7,11 +7,10 @@ const client = new MongoClient(dbURI);
 
 
 const product=async function(toUpdate,res){
-    //console.log('hello',req);
     const database = client.db("Footox");
-    const users = database.collection("data");
+    const users = database.collection("banner");
     if(toUpdate != null && toUpdate.payload){
-        const filter = { productId: toUpdate.id };
+        const filter = { id: toUpdate.id };
         const updateDoc = {
             $set: toUpdate.payload,
           };
@@ -20,25 +19,19 @@ const product=async function(toUpdate,res){
     }
 
     else if(toUpdate != null && toUpdate.id){
-        users.deleteOne( { productId: toUpdate.id } )
+        users.deleteOne( { id: toUpdate.id } )
         console.log('deleted');
     }
-    else if(toUpdate != null && toUpdate.mode){
-        users.find({id: toUpdate.id})
-        console.log("founded")
-    }
-
     const product_data = await users.find({}).toArray(function(err, result) {
         if (err) throw err;
-        //console.log(result);
         res.json(result); 
+        
     });
     
     return;
 
         
 }
-
 
 
 const productGender=async function(req,res){
@@ -53,7 +46,6 @@ const productGender=async function(req,res){
 
 
 
-
 const category=async function(req,res){
     const page=(req.path.replace('/',''));
     const database = client.db("Footox");
@@ -65,19 +57,19 @@ const category=async function(req,res){
 }
 
 
-module.exports.admin_get = (req, res) => {
+module.exports.banner_get = (req, res) => {
     product(null,res);
 }
 
-module.exports.productGender_get = (req, res) => {
-    productGender(req,res);
-}
+// module.exports.productGender_get = (req, res) => {
+//     productGender(req,res);
+// }
 
-module.exports.productCategory_get = (req, res) => {
-    category(req,res);
-}
+// module.exports.productCategory_get = (req, res) => {
+//     category(req,res);
+// }
 
-module.exports.admin_post = async (toUpdate, res) => {
+module.exports.banner_post = async (toUpdate, res) => {
 
     product(toUpdate,res)
  
@@ -86,5 +78,3 @@ module.exports.admin_post = async (toUpdate, res) => {
 // module.exports.adminAdd_post = async (toAdd, res) => {
 //     addProduct(toAdd,res)
 // }
-
-

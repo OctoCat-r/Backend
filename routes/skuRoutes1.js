@@ -31,9 +31,9 @@ var upload = multer({
 });
 
 // User model
-let User = require('../models/models');
+let User = require('../models/Sku');
 
-router.post('/admin3', upload.array('image', 6), (req, res, next) => {
+router.post('/admin4', upload.array('image', 6), (req, res, next) => {
     const reqFiles = [];
     const url = req.protocol + '://' + req.get('host')
     for (var i = 0; i < req.files.length; i++) {
@@ -43,20 +43,18 @@ router.post('/admin3', upload.array('image', 6), (req, res, next) => {
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
         productId:req.body.productId,
-        productName: req.body.productName,
-        productGender: req.body.productGender,
-        description: req.body.description,
-        selling_price: req.body.selling_price,
-        original_price:req.body.original_price,
-        Sizes : req.body.Sizes,
-        color : req.body.color,
-        Status: req.body.Status,
-        createdDate: req.body.CurrentDate,
-        modifiedDate: req.body.UpdatedDate,
-        // Sizes:req.body.Sizes
-        category:req.body.brand,
-        // featured:req.body.featured,
-        image: reqFiles
+        unique: req.body.unique,
+        Quantity: req.body.Quantity,
+        // description: req.body.description,
+        // selling_price: req.body.selling_price,
+        // original_price:req.body.original_price,
+        // Sizes : req.body.Sizes,
+        // color : req.body.color,
+        // Status: req.body.Status,
+        // // Sizes:req.body.Sizes
+        // brand:req.body.brand,
+        // // featured:req.body.featured,
+        // image: reqFiles
     });
 
     user.save().then(result => {
@@ -77,20 +75,13 @@ router.post('/admin3', upload.array('image', 6), (req, res, next) => {
     })
 })
 
-router.get("/getImage", (req, res, next) => {
-    User.find().then(data => {
+router.get("/getStock", (req, res, next) => {
+    User.find({unique:req.body.unique}).then(data => {
         res.status(200).json({
             message: "User list retrieved successfully!",
             users: data
         });
     });
 });
-
-router.get("/public/:img", (req, res)=> {
-    // console.log(req.params.img);
-    
-    res.sendFile(`${req.params.img}`, { root: "public" });
-})
-
 
 module.exports = router;

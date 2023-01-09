@@ -9,13 +9,16 @@ const userSchema = new Schema({
     description: String,
     selling_price: String,
     original_price: String,
+    Status: String,
+    createdDate: String,
+    modifiedDate: String,
     Sizes: {
         type: Object
     },
     color:{
         type: Array
     },
-    brand: String,
+    category: String,
     featured: String,
     image: {
         type: Array
