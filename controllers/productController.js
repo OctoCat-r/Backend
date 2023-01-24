@@ -30,7 +30,7 @@ const product=async function(toUpdate,res){
 
     const product_data = await users.find({}).toArray(function(err, result) {
         if (err) throw err;
-        //console.log(result);
+        
         res.json(result); 
     });
     

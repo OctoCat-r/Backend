@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     productId :String,
-    unique: String,
-    Quantity: Number
+    SKUId: String,
+    Quantity: Number,
+    
     // description: String,
     // selling_price: String,
     // original_price: String,
@@ -22,12 +23,13 @@ const userSchema = new Schema({
     //     type: Array
     // }
     
-}
+},
+{
+    timestamps: true,
+  }
 // {
 //     collection: 'Stock details'
 // },{ versionKey: false }
 )
 
-const User = mongoose.model('Stock details', userSchema);
-
-module.exports = User;
+module.exports = mongoose.models.Users || mongoose.model('Stock Details/', userSchema);

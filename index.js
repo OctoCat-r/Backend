@@ -5,20 +5,18 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const skuRoutes = require('./routes/skuRoutes1');
-const bannerRoutes = require('./routes/bannerRoutes');
+const instaRoutes = require('./routes/instaRoutes');
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const cookieParser=require('cookie-parser');
 const cors=require('cors');
+const path = require("path");
+const csvRoutes = require("./routes/csvRoutes");
 const bodyParser = require('body-parser');
-
-
-
 
 
 app.use(cors({
     origin:["http://localhost:3001","http://localhost:3000"],
 }));
-
 
 
 app.set('view engine', 'ejs');
@@ -32,6 +30,7 @@ mongoose.connect (dbURI, { useNewUrlParser : true, useUnifiedTopology: true})
 // app.get('*', checkUser);
 app.get('/', (req, res) => res.render('home'));
 app.use(express.static('public'));
+app.use("/CSVFile", express.static(path.join(__dirname, "CSVFile")));
 
 console.log("I am runing");
 
@@ -41,5 +40,6 @@ app.use(authRoutes);
 app.use(productRoutes);
 app.use(userRoutes);
 app.use(skuRoutes);
-app.use(bannerRoutes);
+app.use(instaRoutes);
+app.use(csvRoutes);
 app.use(cookieParser());

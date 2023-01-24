@@ -13,7 +13,7 @@ const userSchema = new Schema({
     createdDate: String,
     modifiedDate: String,
     Sizes: {
-        type: Object
+        type: Array
     },
     color:{
         type: Array
