@@ -1,0 +1,33 @@
+const nodemailer = require("nodemailer");
+
+const sendMail1 = async (req, res) => {
+  let testAccount = await nodemailer.createTestAccount();
+  let {text} = req.body;
+
+  console.log(text);
+  // connect with the smtp
+  let transporter = await nodemailer.createTransport({
+    // name: 'example.com',
+    // host: "smtp.ethereal.email",
+    // port: 587,
+    host: 'smtp.office365.com',
+    service: 'hotmail',
+    auth: {
+      user: "E21CSEU0847@bennett.edu.in",
+      pass: "9Yr$0Bt#",
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: 'E21CSEU0847@bennett.edu.in', // sender address
+    to: "E21CSEU0853@bennett.edu.in", // list of receivers
+    subject: "Hello Nishu", // Subject line
+    // text: "Hello YT Thapa", // plain text body
+    html: `<p> ${text}</p>`, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  res.json(info);
+};
+
+module.exports = sendMail1;

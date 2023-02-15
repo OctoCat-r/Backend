@@ -37,11 +37,21 @@ const upload = multer({
 const router = express.Router();
 
 
-router.post(
+router.put(
   "/admin5",
   upload.single('CSVFile'),
-  csvController.create
+  csvController.create,
+  // csvController.del
 );
+
+router.post(
+  "/del",
+  upload.single('CSVFile'),
+  csvController.del,
+)
+
 router.get("/getStock",csvController.stock);
+
+router.get('/count', csvController.count1);
 
 module.exports = router;

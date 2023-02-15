@@ -20,9 +20,11 @@ const userSchema = new Schema({
     },
     category: String,
     featured: String,
+    Quantity: Number,
     image: {
         type: Array
     }
+
     
 }, {
     collection: 'data'
